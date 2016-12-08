@@ -1,6 +1,4 @@
-package com.company.grocery.products;
-
-import com.company.grocery.EProductsRange;
+package com.matic_test.grocery.products;
 
 /**
  * Created by Roman on 12/6/2016.

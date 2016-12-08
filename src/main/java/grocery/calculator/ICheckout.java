@@ -1,6 +1,6 @@
-package com.company.grocery.calculator;
+package com.matic_test.grocery.calculator;
 
-import com.company.grocery.products.IProduct;
+import com.matic_test.grocery.products.IProduct;
 
 import java.util.List;
 

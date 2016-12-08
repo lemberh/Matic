@@ -1,8 +1,8 @@
-package com.company.grocery.calculator;
+package com.matic_test.grocery.calculator;
 
-import com.company.grocery.EProductsRange;
-import com.company.grocery.products.IProduct;
-import com.company.grocery.products.ProductFactory;
+import com.matic_test.grocery.EProductsRange;
+import com.matic_test.grocery.products.IProduct;
+import com.matic_test.grocery.products.ProductFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;

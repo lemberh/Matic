@@ -1,4 +1,4 @@
-package com.company.grocery;
+package com.matic_test.grocery;
 
 /**
  * Created by Roman on 12/6/2016.
