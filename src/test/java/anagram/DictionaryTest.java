@@ -3,6 +3,7 @@ package anagram;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -11,15 +12,18 @@ import java.util.HashSet;
  * Created by Roman on 12/8/2016.
  */
 public class DictionaryTest {
+    private final static String ANAGRAMS = "least setal slate stale steal stela taels tales teals tesla";
 
-    anagram.Dictionary dict;
-    anagram.Dictionary dict_aabcd;
-    Occurrences occ_aabcd;
-    Occurrences occ_abc;
+    private anagram.Dictionary dict;
+    private anagram.Dictionary longDict;
+    private anagram.Dictionary dict_aabcd;
+    private Occurrences occ_aabcd;
+    private Occurrences occ_abc;
 
     @Before
     public void setup() {
-        dict = Dictionary.getDictionary("abbc ab abc aa aabc a b c");
+        dict = Dictionary.getDictionary("abbc ab ba abc aa aabc a b c");
+        longDict = Dictionary.getDictionary(ANAGRAMS);
 
         occ_abc = Occurrences.occurrencesMap("abc");
         occ_aabcd = Occurrences.occurrencesMap("aabcd");
@@ -28,38 +32,21 @@ public class DictionaryTest {
         dict_aabcd.put(occ_abc, new HashSet<>(Arrays.asList("abc", "cba", "bac")));
     }
 
-    @org.junit.Test
+    @Test
     public void getDictionary() throws Exception {
-        Assert.assertEquals(Dictionary.getDictionary("aabcd", "bcdaa", "acabd", "abc", "cba", "bac"), dict_aabcd);
-        Assert.assertNotEquals(Dictionary.getDictionary("aabcd", "bcdaa", "acabd", "abcd", "cba", "bac"), dict_aabcd);
+        Assert.assertEquals(dict_aabcd, Dictionary.getDictionary("aabcd", "bcdaa", "acabd", "abc", "cba", "bac"));
+        Assert.assertNotEquals(dict_aabcd, Dictionary.getDictionary("aabcd", "bcdaa", "acabd", "abcd", "cba", "bac"));
     }
 
-    @org.junit.Test
-    public void testOccurrences() {
-        Occurrences correctValues = new Occurrences();
-        correctValues.put('a', 2);
-        correctValues.put('b', 1);
-        correctValues.put('c', 1);
-        correctValues.put('d', 1);
-        Assert.assertEquals(occ_aabcd, correctValues);
+    @Test
+    public void get() throws Exception {
+        Assert.assertEquals(new HashSet<>(Arrays.asList(ANAGRAMS.split(" "))), longDict.getAnagrams("slate"));
+        Assert.assertEquals(new HashSet<>(Arrays.asList("ab", "ba")), dict.getAnagrams("ab"));
     }
 
-    @org.junit.Test
-    public void getSubtraction() {
-        Occurrences occ = new Occurrences(occ_aabcd);
-        Assert.assertEquals(occ.subtracts(Occurrences.occurrencesMap("abc")), Occurrences.occurrencesMap("ad"));
-        Assert.assertEquals(occ.subtracts(Occurrences.occurrencesMap("aabcd")), new Occurrences());
-        Assert.assertNotEquals(occ.subtracts(Occurrences.occurrencesMap("abc")), Occurrences.occurrencesMap("abc"));
-    }
-
-    @org.junit.Test
+    @Test
     public void getPermutations() throws Exception {
-
+        Assert.assertEquals(new HashSet<>(Arrays.asList(ANAGRAMS.split(" "))), longDict.getAnagrams("slate"));
+        Assert.assertEquals(new HashSet<>(Arrays.asList(ANAGRAMS.split(" "))), longDict.getAnagrams("slate"));
     }
-
-    @org.junit.Test
-    public void findAnagrams() throws Exception {
-
-    }
-
 }

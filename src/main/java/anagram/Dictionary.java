@@ -43,19 +43,27 @@ public class Dictionary extends HashMap<Occurrences, Set<String>> {
         return get(occurrencesMap(word));
     }
 
-    public String getPermutations(List<String> words) {
-        return getPermutations((String[]) words.toArray(new String[words.size()]));
+    /**
+     * @see #getAnagrams(String...)
+     */
+    public Set<String> getAnagrams(List<String> words) {
+        return getAnagrams((String[]) words.toArray(new String[words.size()]));
     }
 
-    public String getPermutations(String... words) {
-        StringBuilder sb = new StringBuilder();
+    /**
+     * @param words to look for anagrams
+     * @return Set of all anagrams of the given words
+     * (if at least one word doesn't have anagrams then return empty set)
+     */
+    public Set<String> getAnagrams(String... words) {
+        Set<String> anagrams = new HashSet<>();
         for (String word : words) {
-            Set<String> anagrams = get(word);
-            if (anagrams == null || anagrams.size() == 0) {
-                return "";
+            Set<String> singleWordAnagrams = get(word);
+            if (singleWordAnagrams == null || singleWordAnagrams.size() == 0) {
+                return Collections.emptySet();
             }
-            sb.append(Arrays.toString(anagrams.toArray()));
+            anagrams.addAll(singleWordAnagrams);
         }
-        return sb.toString();
+        return anagrams;
     }
 }

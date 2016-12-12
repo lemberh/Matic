@@ -122,9 +122,9 @@ public class Anagram {
 //        System.out.println(dict.findAnagrams("aabcd"));
 //        Dictionary d2 = Dictionary.getDictionary("least setal slate stale steal stela taels tales teals tesla es tla");
 //        System.out.println(d2.findAnagrams("aelst"));
-//        System.out.println(dict.getPermutations("a","a","b","c"));
-//        System.out.println(dict.getPermutations("abc","a"));
-//        System.out.println(dict.getPermutations("cbd","c","dba"));
+//        System.out.println(dict.getAnagrams("a","a","b","c"));
+//        System.out.println(dict.getAnagrams("abc","a"));
+//        System.out.println(dict.getAnagrams("cbd","c","dba"));
 //        System.out.println(Dictionary.occurrencesMap("aabc"));
 //        System.out.println(Dictionary.getDictionary("abc").get(Dictionary.occurrencesMap("cba")));
     }
