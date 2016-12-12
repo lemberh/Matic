@@ -1,8 +1,8 @@
-package com.matic_test.grocery.calculator;
+package grocery.calculator;
 
-import com.matic_test.grocery.EProductsRange;
-import com.matic_test.grocery.products.IProduct;
-import com.matic_test.grocery.products.ProductFactory;
+import grocery.EProductsRange;
+import grocery.products.IProduct;
+import grocery.products.ProductFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 /**
  * Created by Roman on 12/6/2016.
  */
-public class Checkout implements ICheckout{
+public class Checkout implements ICheckout {
 
     public static Checkout getInstance(IRule ... rules) {
         return new Checkout(new ArrayList<>(Arrays.asList(rules)));

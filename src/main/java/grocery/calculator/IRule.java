@@ -1,4 +1,4 @@
-package com.matic_test.grocery.calculator;
+package grocery.calculator;
 
 /**
  * Created by Roman on 12/6/2016.

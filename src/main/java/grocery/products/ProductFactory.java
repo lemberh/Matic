@@ -1,6 +1,6 @@
-package com.matic_test.grocery.products;
+package grocery.products;
 
-import com.matic_test.grocery.EProductsRange;
+import grocery.EProductsRange;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
@@ -18,7 +18,7 @@ public class ProductFactory {
         return clone;
     }
 
-    public static IProduct getProduct(EProductsRange type,String name){
+    public static IProduct getProduct(EProductsRange type, String name) {
         return ((AbsProduct)getProduct(type)).setName(name);
     }
 

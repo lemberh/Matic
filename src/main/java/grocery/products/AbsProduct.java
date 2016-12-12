@@ -1,4 +1,4 @@
-package com.matic_test.grocery.products;
+package grocery.products;
 
 /**
  * Created by Roman on 12/6/2016.

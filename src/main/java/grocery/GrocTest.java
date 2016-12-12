@@ -1,9 +1,9 @@
-package com.matic_test.grocery;
+package grocery;
 
-import com.matic_test.grocery.calculator.Checkout;
-import com.matic_test.grocery.calculator.IRule;
-import com.matic_test.grocery.products.IProduct;
-import com.matic_test.grocery.products.ProductFactory;
+import grocery.calculator.Checkout;
+import grocery.calculator.IRule;
+import grocery.products.IProduct;
+import grocery.products.ProductFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;

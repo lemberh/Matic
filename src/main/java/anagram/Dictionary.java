@@ -2,7 +2,6 @@ package anagram;
 
 import java.util.*;
 
-import static anagram.Anagram.combinations;
 import static anagram.Occurrences.occurrencesMap;
 
 /**
@@ -10,9 +9,8 @@ import static anagram.Occurrences.occurrencesMap;
  */
 public class Dictionary extends HashMap<Occurrences, Set<String>> {
 
-    public static Dictionary getDictionary(String dict) {
+    public static Dictionary getDictionary(String... words) {
         Dictionary wordsMap = new Dictionary();
-        String[] words = dict.split(" ");
         for (String word : words) {
             Occurrences key = occurrencesMap(word);
             Set<String> set = wordsMap.get(key);
@@ -25,6 +23,10 @@ public class Dictionary extends HashMap<Occurrences, Set<String>> {
         return wordsMap;
     }
 
+    public static Dictionary getDictionary(String dict) {
+        return getDictionary(dict.split(" "));
+    }
+
     public Dictionary(Dictionary dictionary) {
         super(dictionary);
     }
@@ -33,6 +35,10 @@ public class Dictionary extends HashMap<Occurrences, Set<String>> {
         super();
     }
 
+    /**
+     * @param word
+     * @return anagrams of word that exists in the dictionary
+     */
     public Set<String> get(String word) {
         return get(occurrencesMap(word));
     }
@@ -51,16 +57,5 @@ public class Dictionary extends HashMap<Occurrences, Set<String>> {
             sb.append(Arrays.toString(anagrams.toArray()));
         }
         return sb.toString();
-    }
-
-    public Set<String> findAnagrams(String word) {
-        Set<String> anagrams = new HashSet<>();
-        for (List<String> row : combinations(word)) {
-            String anagram = getPermutations(row);
-            if (!anagram.isEmpty()) {
-                anagrams.add(anagram);
-            }
-        }
-        return anagrams;
     }
 }

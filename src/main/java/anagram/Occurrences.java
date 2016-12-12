@@ -7,6 +7,15 @@ import java.util.HashMap;
  */
 public class Occurrences extends HashMap<Character, Integer> {
 
+    public Occurrences(int size) {
+        super(size);
+    }
+
+    public Occurrences(Character key, Integer value) {
+        super();
+        put(key, value);
+    }
+
     static public Occurrences occurrencesMap(String word) {
         Occurrences map = new Occurrences();
         char[] chars = word.toCharArray();
@@ -40,5 +49,20 @@ public class Occurrences extends HashMap<Character, Integer> {
             }
         }
         return true;
+    }
+
+    /**
+     * @param other others should be a subset of current set
+     * @return all elements from current set except elements in <b>other</b>
+     */
+    public Occurrences subtracts(Occurrences other) {
+        Occurrences resulting = new Occurrences(other.size());
+        forEach((key, value) -> {
+            int newValue = value - other.getOrDefault(key, 0);
+            if (newValue > 0) {
+                resulting.put(key, newValue);
+            }
+        });
+        return resulting;
     }
 }
