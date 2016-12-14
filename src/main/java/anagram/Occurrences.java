@@ -1,11 +1,14 @@
 package anagram;
 
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * Created by Roman on 12/8/2016.
  */
 public class Occurrences extends HashMap<Character, Integer> {
+
+    private boolean isHashValid = true;
+    private int hashCode = 1;
 
     public Occurrences(int size) {
         super(size);
@@ -16,9 +19,13 @@ public class Occurrences extends HashMap<Character, Integer> {
         put(key, value);
     }
 
+    static public Occurrences occurrencesMap(String ... words) {
+        return occurrencesMap(String.join("",words));
+    }
+
     static public Occurrences occurrencesMap(String word) {
         Occurrences map = new Occurrences();
-        char[] chars = word.toCharArray();
+        char[] chars = word.toLowerCase().toCharArray();
         for (char ch : chars) {
             Integer count = map.get(ch);
             if (count == null) {
@@ -38,14 +45,28 @@ public class Occurrences extends HashMap<Character, Integer> {
     }
 
     @Override
+    public Integer put(Character key, Integer value) {
+        isHashValid = false;
+        return super.put(key, value);
+    }
+
+    @Override
+    public void putAll(Map<? extends Character, ? extends Integer> m) {
+        isHashValid = false;
+        super.putAll(m);
+    }
+
+    @Override
     public boolean equals(Object o) {
         return o instanceof Occurrences ? compare((Occurrences) o) : super.equals(o);
     }
 
     public boolean compare(Occurrences to) {
+        if (this == to) return true;
+        if (to.size() != size()) return false;
         for (Character key : to.keySet()) {
             Integer value = get(key);
-            if (value == null || !value.equals(to.get(key))) {
+            if (value == null || !Objects.equals(value, to.get(key))) {
                 return false;
             }
         }
@@ -54,7 +75,19 @@ public class Occurrences extends HashMap<Character, Integer> {
 
     @Override
     public int hashCode() {
-        return super.hashCode();//TODO implement faster
+        if (isHashValid){
+            return hashCode;
+        }
+        hashCode = 1;
+        List<Character> keys = new ArrayList<>(keySet());
+        Collections.sort(keys);
+        for (Character key : keys) {
+            Integer valueHash = get(key);
+            hashCode = 31 * hashCode + (valueHash == null ? 0 : valueHash);
+            hashCode = 31 * hashCode + (key == null ? 0 : key);
+        }
+        isHashValid = true;
+        return hashCode;
     }
 
     /**

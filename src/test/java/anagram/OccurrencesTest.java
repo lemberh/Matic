@@ -39,6 +39,14 @@ public class OccurrencesTest {
     }
 
     @Test
+    public void hashCodeTest() throws Exception {
+        Assert.assertEquals(occ_abc.hashCode(), Occurrences.occurrencesMap("abc").hashCode());
+        Assert.assertEquals(occ_abc.hashCode(), Occurrences.occurrencesMap("cab").hashCode());
+        Assert.assertEquals(occ_aabcd.hashCode(), Occurrences.occurrencesMap("aabcd").hashCode());
+        Assert.assertEquals(occ_aabcd.hashCode(), Occurrences.occurrencesMap("bacad").hashCode());
+    }
+
+    @Test
     public void subtracts() throws Exception {
         Occurrences occ = new Occurrences(occ_aabcd);
         Assert.assertEquals(occ.subtracts(Occurrences.occurrencesMap("abc")), Occurrences.occurrencesMap("ad"));

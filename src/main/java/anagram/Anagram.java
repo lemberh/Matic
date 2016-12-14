@@ -12,7 +12,7 @@ public class Anagram {
         this.dict = dict;
     }
 
-    public List<List<String>> findAnagrams(String word) {
+    public List<List<String>> findAnagrams(String ... word) {
         Occurrences occ = Occurrences.occurrencesMap(word);
         return anagramsCombinations(occ);
     }
