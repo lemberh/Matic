@@ -44,11 +44,17 @@ public class Occurrences extends HashMap<Character, Integer> {
 
     public boolean compare(Occurrences to) {
         for (Character key : to.keySet()) {
-            if (get(key) == null || !get(key).equals(to.get(key))) {
+            Integer value = get(key);
+            if (value == null || !value.equals(to.get(key))) {
                 return false;
             }
         }
         return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();//TODO implement faster
     }
 
     /**

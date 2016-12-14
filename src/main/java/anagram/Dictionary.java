@@ -10,15 +10,17 @@ import static anagram.Occurrences.occurrencesMap;
 public class Dictionary extends HashMap<Occurrences, Set<String>> {
 
     public static Dictionary getDictionary(String... words) {
-        Dictionary wordsMap = new Dictionary();
+        Dictionary wordsMap = new Dictionary(words.length / 2);
         for (String word : words) {
             Occurrences key = occurrencesMap(word);
             Set<String> set = wordsMap.get(key);
             if (set == null) {
                 set = new HashSet<>();
+                set.add(word);
+                wordsMap.put(key, set);
+            } else {
+                set.add(word);
             }
-            set.add(word);
-            wordsMap.put(occurrencesMap(word), set);
         }
         return wordsMap;
     }
@@ -33,6 +35,10 @@ public class Dictionary extends HashMap<Occurrences, Set<String>> {
 
     public Dictionary() {
         super();
+    }
+
+    public Dictionary(int size) {
+        super(size);
     }
 
     /**

@@ -1,6 +1,8 @@
 package anagram;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 public class Anagram {
 
@@ -8,71 +10,6 @@ public class Anagram {
 
     public Anagram(Dictionary dict) {
         this.dict = dict;
-    }
-
-    public static void combinations(String pref, List<String> s, Set<List<String>> result) {
-        if (s.isEmpty()) {
-//            System.out.println("END --- ");
-            return;
-        }
-
-        List<String> row = new ArrayList<>(s);
-        row.add(0, pref);
-        result.add(row);
-
-        for (int i = 1; i < s.size(); i++) {
-            List<String> subset = new LinkedList<>(s);
-            String n = subset.get(0) + subset.get(i);
-            subset.remove(i);
-            subset.remove(0);
-            subset.add(0, n);
-            row = new ArrayList<>(subset);
-            row.add(0, pref);
-            result.add(row);
-        }
-//        System.out.println(pref + ',' + String.join(",",s));
-
-        Iterator<String> iter = s.iterator();
-        for (int i = 0; i < s.size(); i++) {
-            List<String> subset = new LinkedList<>(s);
-            subset.remove(i);
-            combinations(pref + iter.next(), subset, result);
-        }
-    }
-
-    public static Set<List<String>> combinations(String s) {
-        if (s.isEmpty()) return Collections.singleton(Collections.singletonList(""));
-        List<String> chars = new LinkedList<>(Arrays.asList(s.split("")));
-        String pref = chars.get(0);
-        chars.remove(0);
-
-        Set<List<String>> res = new HashSet<>(chars.size() * chars.size() / 2);
-        res.add(Collections.singletonList(s));
-        combinations(pref, chars, res);
-        return res;
-    }
-
-    /**
-     * @param occ - Occurrence map of word of sentence
-     * @return return all possible combinations of elements in <b>occ</b>
-     */
-    public List<Occurrences> combinations(Occurrences occ) {
-        if (occ.isEmpty()) {
-            return new ArrayList<>();
-        }
-        List<Occurrences> result = new ArrayList<>();
-        Occurrences acc = new Occurrences();
-        occ.forEach((key, value) -> {
-            acc.put(key, value);
-            for (int i = 1; i <= value; i++) {
-                List<Occurrences> combinations = combinations(occ.subtracts(acc));
-                Occurrences currentEl = new Occurrences(key, i);
-                combinations.forEach(occurrences -> occurrences.putAll(currentEl));
-                combinations.add(currentEl);
-                result.addAll(combinations);
-            }
-        });
-        return result;
     }
 
     public List<List<String>> findAnagrams(String word) {
@@ -100,8 +37,31 @@ public class Anagram {
                         r.add(anagram);
                         result.add(r);
                     }));
-//                    result.addAll(anagramCombinations);
                 }
+            }
+        });
+        return result;
+    }
+
+
+    /**
+     * @param occ - Occurrence map of word of sentence
+     * @return return all possible combinations of elements in <b>occ</b>
+     */
+    private List<Occurrences> combinations(Occurrences occ) {
+        if (occ.isEmpty()) {
+            return new ArrayList<>();
+        }
+        List<Occurrences> result = new ArrayList<>();
+        Occurrences acc = new Occurrences();
+        occ.forEach((key, value) -> {
+            acc.put(key, value);
+            for (int i = 1; i <= value; i++) {
+                List<Occurrences> combinations = combinations(occ.subtracts(acc));
+                Occurrences currentEl = new Occurrences(key, i);
+                combinations.forEach(occurrences -> occurrences.putAll(currentEl));
+                combinations.add(currentEl);
+                result.addAll(combinations);
             }
         });
         return result;
@@ -110,9 +70,13 @@ public class Anagram {
     public static void main(String[] args) {
 //        System.out.println(combinations("aabc").size());
         Anagram a = new Anagram(Dictionary.getDictionary("aabc", "abc", "bca", "cb", "a", "ba", "c"));
-        a.combinations(Occurrences.occurrencesMap("aabc")).forEach(System.out::println);
-        System.out.println(a.combinations(Occurrences.occurrencesMap("aabc")).size());
+        System.out.println("findAnagrams(\"aabc\")");
+        a.findAnagrams("aabc").forEach(System.out::println);
+        System.out.println(a.findAnagrams("aabc").size());
+        System.out.println("a.anagramsCombinations(Occurrences.occurrencesMap(\"aabc\"))");
         a.anagramsCombinations(Occurrences.occurrencesMap("aabc")).forEach(System.out::println);
+        System.out.println("a.combinations(Occurrences.occurrencesMap(\"aabc\"))");
+        a.combinations(Occurrences.occurrencesMap("aabc")).forEach(System.out::println);
 //        Dictionary dict = Dictionary.getDictionary("a b c ab abc");
 //        System.out.println(dict);
 //        System.out.println(combinations("aabc"));
